@@ -1,0 +1,20 @@
+spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wallet_ledger
+    username: ledger_app
+    password: devpassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate   # we'll use Flyway/Liquibase for real migrations, not auto-generate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false    # important for a ledger app — forces you to fetch what you need inside the transaction, not lazily in the controller
+
+server:
+  port: 8080

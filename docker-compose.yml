@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16
+    container_name: wallet-ledger-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: wallet_ledger
+      POSTGRES_USER: ledger_app
+      POSTGRES_PASSWORD: devpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - wallet_ledger_data:/var/lib/postgresql/data
+
+volumes:
+  wallet_ledger_data:
