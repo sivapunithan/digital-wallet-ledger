@@ -1,0 +1,24 @@
+meta {
+  name: Create Account
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/accounts
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "ownerRef": "alice",
+    "currency": "INR",
+    "type": "CUSTOMER"
+  }
+}
+
+script:post-response {
+  // Auto-save the created account's ID into the environment
+  bru.setEnvVar("lastCreatedAccountId", res.body.id);
+}

@@ -27,4 +27,21 @@ public interface LedgerEntryRepository extends JpaRepository<LedgerEntry, UUID>{
     BigDecimal getBalanceForAccount(@Param("accountId") UUID accountId);
 
     List<LedgerEntry> findByTransaction_Id(UUID transactionId);
+
+    @Query(value = """
+    SELECT t.id
+    FROM transactions t
+    JOIN ledger_entries le ON le.transaction_id = t.id
+    GROUP BY t.id
+    HAVING SUM(CASE WHEN le.type = 'CREDIT' THEN le.amount ELSE -le.amount END) != 0
+    """, nativeQuery = true)
+    List<UUID> findUnbalancedTransactionIds();
+
+    @Query(value = """
+    SELECT COALESCE(SUM(
+        CASE WHEN type = 'CREDIT' THEN amount ELSE -amount END
+    ), 0)
+    FROM ledger_entries
+    """, nativeQuery = true)
+    BigDecimal getGlobalNetBalance();
 }

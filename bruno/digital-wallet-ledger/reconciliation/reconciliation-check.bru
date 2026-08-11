@@ -1,0 +1,14 @@
+meta {
+  name: Reconciliation Check
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/reconciliation/check
+  auth: none
+}
+
+assert {
+  res.body.healthy: eq true
+}

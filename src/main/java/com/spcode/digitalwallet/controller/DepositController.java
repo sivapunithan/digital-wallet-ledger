@@ -6,22 +6,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spcode.digitalwallet.dto.TransferRequest;
+import com.spcode.digitalwallet.dto.DepositRequest;
 import com.spcode.digitalwallet.dto.TransferResponse;
 import com.spcode.digitalwallet.service.TransferService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@RequestMapping("/deposits")
 @RestController
-@RequestMapping("/transfers")
 @RequiredArgsConstructor
-public class TransferContrller {
+public class DepositController {
     private final TransferService transferService;
 
     @PostMapping
-    public ResponseEntity<TransferResponse> transfer(@Valid @RequestBody TransferRequest request) {
-        return ResponseEntity.ok(transferService.transfer(request));
+    public ResponseEntity<TransferResponse> deposit(@Valid @RequestBody DepositRequest request){
+        return ResponseEntity.ok(transferService.deposit(request));
     }
-
 }

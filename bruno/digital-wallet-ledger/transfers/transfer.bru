@@ -1,0 +1,24 @@
+meta {
+  name: Transfer
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/transfers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "fromAccountId": "{{aliceId}}",
+    "toAccountId": "{{bobId}}",
+    "amount": 500.00,
+    "idempotencyKey": "{{$randomUUID}}"
+  }
+}
+
+script:post-response {
+  bru.setEnvVar("lastTransactionId", res.body.transactionId);
+}

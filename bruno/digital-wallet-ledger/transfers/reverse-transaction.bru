@@ -1,0 +1,17 @@
+meta {
+  name: Reverse Transaction
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{baseUrl}}/transfers/{{lastTransactionId}}/reverse
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "idempotencyKey": "{{$randomUUID}}"
+  }
+}

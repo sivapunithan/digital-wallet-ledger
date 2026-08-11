@@ -3,6 +3,7 @@ package com.spcode.digitalwallet.controller;
 import javax.security.auth.login.AccountException;
 import javax.security.auth.login.AccountNotFoundException;
 
+import com.spcode.digitalwallet.service.TransactionNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -41,4 +42,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleInsufficientBalance(InsufficientBalanceException ex) {
     return ResponseEntity.badRequest().body(ex.getMessage());
 }
+   @ExceptionHandler(TransactionNotFoundException.class)
+   public ResponseEntity<String> handleTransactionNotFound(TransactionNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+   }
 }

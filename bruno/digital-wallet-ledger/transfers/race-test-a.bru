@@ -1,0 +1,20 @@
+meta {
+  name: Race Test A
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/transfers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "fromAccountId": "{{aliceId}}",
+    "toAccountId": "{{bobId}}",
+    "amount": 500.00,
+    "idempotencyKey": "race-test-A"
+  }
+}

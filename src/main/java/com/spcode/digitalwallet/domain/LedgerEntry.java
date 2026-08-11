@@ -2,6 +2,7 @@ package com.spcode.digitalwallet.domain;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Map;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "ledger_entries")
 @Getter
-@Setter
 @NoArgsConstructor
 public class LedgerEntry {
     @Id
@@ -45,4 +45,11 @@ public class LedgerEntry {
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt = Instant.now();
+
+    public LedgerEntry(Transaction transaction, Account account, EntryType type, BigDecimal amount){
+        this.transaction = transaction;
+        this.account = account;
+        this.type = type;
+        this.amount = amount;
+    }
 }

@@ -1,0 +1,24 @@
+meta {
+  name: Nonexistent Account (should 404)
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{baseUrl}}/transfers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "fromAccountId": "00000000-0000-0000-0000-000000000000",
+    "toAccountId": "{{bobId}}",
+    "amount": 100.00,
+    "idempotencyKey": "{{$randomUUID}}"
+  }
+}
+
+assert {
+  res.status: eq 404
+}

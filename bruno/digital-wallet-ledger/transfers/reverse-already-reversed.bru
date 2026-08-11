@@ -1,0 +1,21 @@
+meta {
+  name: Reverse Already-Reversed (should 400)
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{baseUrl}}/transfers/{{lastTransactionId}}/reverse
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "idempotencyKey": "{{$randomUUID}}"
+  }
+}
+
+assert {
+  res.status: eq 400
+}

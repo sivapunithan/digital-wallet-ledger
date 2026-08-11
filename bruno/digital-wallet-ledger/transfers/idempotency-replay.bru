@@ -1,0 +1,26 @@
+meta {
+  name: Idempotency Replay
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/transfers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "fromAccountId": "{{aliceId}}",
+    "toAccountId": "{{bobId}}",
+    "amount": 100.00,
+    "idempotencyKey": "fixed-replay-key-001"
+  }
+}
+
+script:post-response {
+  console.log("Transaction ID:", res.body.transactionId);
+  // Run this request twice manually — the transactionId in console
+  // should be IDENTICAL both times, proving idempotency works.
+}

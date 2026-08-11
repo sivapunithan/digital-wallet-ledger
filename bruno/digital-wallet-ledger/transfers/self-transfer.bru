@@ -1,0 +1,24 @@
+meta {
+  name: Self Transfer (should 400)
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{baseUrl}}/transfers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "fromAccountId": "{{aliceId}}",
+    "toAccountId": "{{aliceId}}",
+    "amount": 100.00,
+    "idempotencyKey": "{{$randomUUID}}"
+  }
+}
+
+assert {
+  res.status: eq 400
+}
